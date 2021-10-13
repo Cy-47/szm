@@ -32,7 +32,14 @@ public class AdjustOffset : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GetComponent<Timer>().GetTime() > 2) _inGame.StartNewGame();
+        if (GetComponent<Timer>().GetTime() > 2)
+        {
+            foreach (Transform child in GameObject.Find("NoteCanvas").transform)
+            {
+                if(child.name != "ZeroLine") Destroy(child.gameObject);
+            }
+            _inGame.StartNewGame();
+        }
         offsetTextObject.GetComponent<TextMeshProUGUI>().SetText(_offset + "ms");
     }
 

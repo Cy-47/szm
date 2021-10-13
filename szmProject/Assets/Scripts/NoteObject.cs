@@ -27,7 +27,7 @@ public class NoteObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector2(transform.position.x, ( _time-_timer.GetTime()+PlayerPrefs.GetInt("offset")/1000f )*200);
-        if(_time-_timer.GetTime() < -0.6) Destroy(gameObject);
+        transform.localPosition = new Vector2(transform.localPosition.x, ( _time-_timer.GetTime()+PlayerPrefs.GetInt("offset")/1000f )*200);
+        if(_time-_timer.GetTime()+PlayerPrefs.GetInt("offset")/1000f < -0.6) Destroy(gameObject);
     }
 }

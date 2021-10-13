@@ -24,6 +24,7 @@ public class InGame : MonoBehaviour
     private ScoreFileReader _scoreFileReader;
     private AudioClip _music;
     private bool _isInRealGame;
+    public GameObject noteCanvas;
     
     public void StartNewGame()
     {
@@ -90,7 +91,7 @@ public class InGame : MonoBehaviour
                 if (Input.GetKey(kcode))
                     _key = kcode;
             }
-            Transform tno = transform.Find(_key.ToString());
+            Transform tno = noteCanvas.transform.Find(_key.ToString());
             if (tno != null)
             {
                 NoteObject no = tno.gameObject.GetComponent<NoteObject>();
@@ -118,10 +119,9 @@ public class InGame : MonoBehaviour
         foreach (var note in score.GetNotes())
         {
             GameObject go;
-            go = Instantiate(notePrefab, transform.position + new Vector3((note.key - KeyCode.A) * 7 - 80, 0, 0),
-                transform.rotation);
+            go = Instantiate(notePrefab, noteCanvas.transform, false);
+            go.transform.localPosition = new Vector3((note.key - KeyCode.A) * 7 - 80, 0, 0);
             go.GetComponent<NoteObject>().SetTime(note.time);
-            go.transform.parent = gameObject.transform;
             go.name = note.key.ToString();
             go.transform.Find("Canvas").Find("Text").GetComponent<Text>().text = note.name;
         }
