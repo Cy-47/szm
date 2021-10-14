@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -14,55 +15,36 @@ public class InGame : MonoBehaviour
     public GameObject notePrefab;
     private bool _gameStarted = false;
     private MusicPlayer _musicPlayer;
-    public GameObject evalTextObject;
-    private EvalText _evalText;
+    public EvalText evalText;
     private string _eval;
-    public GameObject scoreMeterObject;
-    private ScoreMeter _scoreMeter;
-    public GameObject scoreTextObject;
-    private TextMeshProUGUI _scoreText;
-    private ScoreFileReader _scoreFileReader;
     private AudioClip _music;
-    private bool _isInRealGame;
     public GameObject noteCanvas;
+    public UnityEvent onHitNote;
+    public int offset;
+    public int flowRate;
+    private bool _paused;
     
     public void StartNewGame()
     {
         _gameStarted = false;
-        if (_isInRealGame)
-        {
-            _scoreMeter.SetCount("Total", _score.Length());
-            _scoreText = scoreTextObject.GetComponent<TextMeshProUGUI>();
-        }
         CreateNoteObject(_score);
         _musicPlayer.SetMusic(_music);
-        //Delay start time
+        _musicPlayer.Pause();
+        offset = PlayerPrefs.GetInt("offset");
+        flowRate = PlayerPrefs.GetInt("flowRate");
         _timer.setTime(0);
         _timer.StartTimer();
+        Resume();
     }
 
     private void Awake()
     {
-        _scoreFileReader = GetComponent<ScoreFileReader>();
-        _isInRealGame = SceneManager.GetActiveScene().name == "Game";
-        _evalText = evalTextObject.GetComponent<EvalText>();
-        print(_evalText);
         _musicPlayer = GetComponent<MusicPlayer>();
         _timer = GetComponent<Timer>();
+        onHitNote = new UnityEvent();
     }
     
     // Start is called before the first frame update
-    void Start()
-    {
-        if (_isInRealGame)
-        {
-            _scoreMeter = scoreMeterObject.GetComponent<ScoreMeter>();
-            TextAsset txt = Resources.Load("两只老虎") as TextAsset;
-            _score = _scoreFileReader.ReadFromTaxtAsset(txt);
-            _music = Resources.Load<AudioClip>("宝宝巴士 - 两只老虎");
-            StartNewGame();
-        }
-    }
 
     public void SetMusic(AudioClip music)
     {
@@ -78,6 +60,7 @@ public class InGame : MonoBehaviour
     
     void Update()
     {
+        if (_paused) return;
         if (_timer.GetTime() > 26) SceneManager.LoadScene("Settle");
         if (_timer.GetTime() > 0 && !_gameStarted)
         {
@@ -95,7 +78,7 @@ public class InGame : MonoBehaviour
             if (tno != null)
             {
                 NoteObject no = tno.gameObject.GetComponent<NoteObject>();
-                _delay = _timer.GetTime() - no.GetTime() - PlayerPrefs.GetInt("offset")/1000f;
+                _delay = _timer.GetTime() - no.GetTime() - offset/1000f;
                 Debug.Log(_delay);
                 if (Math.Abs(_delay) < 0.08) _eval = "Perfect";
                 else if (Math.Abs(_delay) < 0.2) _eval = "Good";
@@ -103,14 +86,13 @@ public class InGame : MonoBehaviour
                 else _eval = null;
                 if (_eval != null)
                 {
+                    onHitNote.Invoke();
                     _musicPlayer.PlayHitEffect();
-                    _evalText.SetEval(_eval);
+                    evalText.SetEval(_eval);
                     Destroy(tno.gameObject);
-                    if(_isInRealGame) _scoreMeter.AddCount(_eval, 1);
                 }
             }
         }
-        if(_isInRealGame) _scoreText.text = _scoreMeter.GetScoreString();
     }
 
     void CreateNoteObject(Score score)
@@ -125,6 +107,33 @@ public class InGame : MonoBehaviour
             go.name = note.key.ToString();
             go.transform.Find("Canvas").Find("Text").GetComponent<Text>().text = note.name;
         }
+    }
+
+    public string GetEval()
+    {
+        return _eval;
+    }
+
+    public void SetGameTimeScale(float timeScale)
+    {
+        _musicPlayer.SetPitch(timeScale);
+        Time.timeScale = timeScale;
+    }
+    public void Pause()
+    {
+        SetGameTimeScale(0);
+        _paused = true;
+    }
+
+    public void Resume()
+    {
+        SetGameTimeScale(1);
+        _paused = false;
+    }
+
+    public Timer GetTimer()
+    {
+        return _timer;
     }
 
     public class Note

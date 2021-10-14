@@ -15,9 +15,13 @@ public class MusicPlayer : MonoBehaviour
 
     public void SetMusic(AudioClip music)
     {
-        print(music.ToString());
-        print(_audioSource);
+        //print(music.ToString());
         _audioSource.clip = music;
+    }
+
+    public void SetPitch(float pitch)
+    {
+        _audioSource.pitch = pitch;
     }
     
     public void PlayHitEffect()
@@ -25,6 +29,10 @@ public class MusicPlayer : MonoBehaviour
         _audioSource.PlayOneShot(hitSoundFx, 3f);
     }
 
+    public void Pause()
+    {
+        _audioSource.Pause();
+    }
     public void PlayMusicFrom(float startTime)
     {
         _audioSource.time = startTime;

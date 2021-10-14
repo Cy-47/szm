@@ -5,18 +5,21 @@ using UnityEngine;
 public class NoteObject : MonoBehaviour
 {
     private Timer _timer;
-    //public GameObject game;
+    private GameObject _gameSystem;
     private float _time;
+    private InGame _inGame;
     // Start is called before the first frame update
 
     public void SetTime(float time)
     {
-        this._time = time;
+        _time = time;
     }
     
     void Start()
     {
-        _timer = GameObject.Find("GameSystem").GetComponent<Timer>();
+        _gameSystem = GameObject.Find("GameSystem");
+        _timer = _gameSystem.GetComponent<Timer>();
+        _inGame = _gameSystem.GetComponent<InGame>();
     }
 
     public float GetTime()
@@ -27,7 +30,8 @@ public class NoteObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.localPosition = new Vector2(transform.localPosition.x, ( _time-_timer.GetTime()+PlayerPrefs.GetInt("offset")/1000f )*200);
-        if(_time-_timer.GetTime()+PlayerPrefs.GetInt("offset")/1000f < -0.6) Destroy(gameObject);
+        transform.localPosition = new Vector2(transform.localPosition.x,
+            (_time - _timer.GetTime() + _inGame.offset / 1000f) * _inGame.flowRate);
+        if(_time-_timer.GetTime()+_inGame.offset/1000f < -0.6) Destroy(gameObject);
     }
 }

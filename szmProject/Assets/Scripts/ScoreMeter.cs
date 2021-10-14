@@ -63,6 +63,11 @@ public class ScoreMeter : MonoBehaviour
         }
     }
 
+    public void Clear()
+    {
+        _totalCount = _perfectCount = _goodCount = _badCount = 0;
+    }
+    
     public int GetScore()
     {
         if (_perfectCount == _totalCount) return MaxScore;

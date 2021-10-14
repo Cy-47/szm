@@ -11,7 +11,8 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         startButton.onClick.AddListener(StartGame);
-        settingButton.onClick.AddListener(Setting);
+        settingButton.onClick.AddListener(GoToSetting);
+        if(!PlayerPrefs.HasKey("offset") || !PlayerPrefs.HasKey("flowRate")) GoToSetting();
     }
 
     // Update is called once per frame
@@ -20,7 +21,7 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
-    void Setting()
+    void GoToSetting()
     {
         SceneManager.LoadScene("Setting");
     }
