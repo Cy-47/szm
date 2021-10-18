@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+///Used to play music and soundFx in game
 public class MusicPlayer : MonoBehaviour
 {
-    // Start is called before the first frame update
     private AudioSource _audioSource;
     public AudioClip hitSoundFx;
     void Awake()
@@ -39,8 +37,4 @@ public class MusicPlayer : MonoBehaviour
         _audioSource.Play();
     }
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

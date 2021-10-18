@@ -293,7 +293,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.4, g: 0.53333336, b: 0.8, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1346,7 +1346,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1684323651}
-  - component: {fileID: 1684323650}
   - component: {fileID: 1684323652}
   m_Layer: 0
   m_Name: GameSystem
@@ -1355,24 +1354,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1684323650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1684323649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2665e340d88a4679a019fc4ba98d7ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scoreTextObject: {fileID: 1211912546}
-  perfectCountTextObject: {fileID: 1644508961}
-  goodCountTextObject: {fileID: 1840558433}
-  badCountTextObject: {fileID: 1239967361}
-  missCountTextObject: {fileID: 1259134388}
-  gradeTextObject: {fileID: 909821386}
 --- !u!4 &1684323651
 Transform:
   m_ObjectHideFlags: 0
@@ -1399,8 +1380,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2668a4962644496b835aade9b13570f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  returnButtonObject: {fileID: 1507640829}
-  retryButtonObject: {fileID: 1887112882}
+  returnButton: {fileID: 1507640831}
+  retryButton: {fileID: 1887112884}
+  scoreText: {fileID: 1211912548}
+  perfectCountText: {fileID: 1644508963}
+  goodCountText: {fileID: 1840558435}
+  badCountText: {fileID: 1239967363}
+  missCountText: {fileID: 1259134390}
+  gradeText: {fileID: 909821388}
 --- !u!1 &1840558433
 GameObject:
   m_ObjectHideFlags: 0

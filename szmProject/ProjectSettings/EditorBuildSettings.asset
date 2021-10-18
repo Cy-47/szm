@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 478ac19839660485e906d3812f789f95
   - enabled: 1
-    path: Assets/Scenes/Game.unity
+    path: Assets/Scenes/MainGame.unity
     guid: b32cb8236f3bf4435acc7d77f8737dd8
   - enabled: 1
     path: Assets/Scenes/Settle.unity
@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Setting.unity
     guid: 1c014783b71aa46a6b1ee20363ee0d8f
+  - enabled: 1
+    path: Assets/Scenes/SelectSong.unity
+    guid: cc54032dcb8104750a1f7de5951c3055
   m_configObjects: {}

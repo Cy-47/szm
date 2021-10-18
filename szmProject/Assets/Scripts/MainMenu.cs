@@ -18,7 +18,7 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void StartGame()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("SelectSong");
     }
 
     void GoToSetting()

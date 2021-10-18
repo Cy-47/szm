@@ -3,12 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScoreMeter : MonoBehaviour
+/// <summary>
+/// Stores Perfect, Good, Bad, and Miss counts
+/// and calculates the score
+/// </summary>
+public class ScoreMeter
+
 {
     private int _perfectCount = 0, _goodCount = 0, _badCount = 0, _totalCount;
     private const int MaxScore = 1000000;
     private const float GoodScoreRate = 0.6f;
-
+    
     public int GetCount(string eval)
     {
         switch (eval)
@@ -78,9 +83,5 @@ public class ScoreMeter : MonoBehaviour
     public string GetScoreString()
     {
         return GetScore().ToString().PadLeft(7, '0');
-    }
-    void Start()
-    {
-        DontDestroyOnLoad(gameObject);
     }
 }

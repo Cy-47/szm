@@ -1,6 +1,7 @@
-# TYPE CONST_BPM
+# MUSIC 宝宝巴士 - 两只老虎
 # BPM 125
 # START 0
+# TIME_LENGTH 26
 
 20 L 两
 21 Z 只

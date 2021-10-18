@@ -1,15 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SettingController : MonoBehaviour
+public class SettingManager : MonoBehaviour
+//Controls the game at the setting scene
 {
     private InGame _inGame;
-    private AudioClip _music;
     private InGame.Score _score;
     private ScoreFileReader _scoreFileReader;
     public Button returnButton, addOffsetButton, minusOffsetButton, addFlowRateButton, minusFlowRateButton;
@@ -21,7 +18,6 @@ public class SettingController : MonoBehaviour
     {
         _inGame = GetComponent<InGame>();
         _scoreFileReader = GetComponent<ScoreFileReader>();
-        _music = Resources.Load<AudioClip>("AdjustOffset");
         _score = _scoreFileReader.ReadFromTaxtAsset(Resources.Load("AdjustOffsetScore") as TextAsset);
         if(!PlayerPrefs.HasKey("offset")) PlayerPrefs.SetInt("offset", 0);
         if(!PlayerPrefs.HasKey("flowRate")) PlayerPrefs.SetInt("flowRate", 200);
@@ -32,7 +28,6 @@ public class SettingController : MonoBehaviour
         minusOffsetButton.onClick.AddListener(DecreaseOffset);
         addFlowRateButton.onClick.AddListener(IncreaseFlowRate);
         minusFlowRateButton.onClick.AddListener(DecreaseFlowRate);
-        _inGame.SetMusic(_music);
         _inGame.SetScore(_score);
         _inGame.StartNewGame();
     }

@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d697010f0dbc46e381aafe8e08f249e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notePrefab: {fileID: 2666033897757418457, guid: 67efbb26ac8314a31af0477063924e0f, type: 3}
+  notePrefab: {fileID: 5280678337769322032, guid: 5936ede5710b54302887b22edab5cb36, type: 3}
   evalText: {fileID: 634094263}
   noteCanvas: {fileID: 547496530}
   onHitNote:
@@ -1547,7 +1547,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.4, g: 0.53333336, b: 0.8, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

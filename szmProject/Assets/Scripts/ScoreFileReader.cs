@@ -5,13 +5,7 @@ using UnityEngine;
 
 public class ScoreFileReader : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     public InGame.Score ReadFromTaxtAsset(TextAsset ta)
     {
         Dictionary<string, KeyCode> dict = new Dictionary<string, KeyCode>();
@@ -20,22 +14,36 @@ public class ScoreFileReader : MonoBehaviour
             if(!dict.ContainsKey(key.ToString())) dict.Add(key.ToString(), key);
         }
         var score = new InGame.Score();
-        string[] ln;
-        string type;
         float bpm = 60, startTime=0;
-        foreach (var line in ta.text.Split('\n'))
+        foreach (var line in ta.text.Split(new string[] {"\n", "\r\n", "\r"}, StringSplitOptions.RemoveEmptyEntries))
         {
-            if (line.Length == 0) continue;
             if (line.Length > 2)
             {
                 if(line[0]=='/' && line[1]=='/') continue;
             }
-            ln = line.Split(' ');
+            var ln = line.Split(' ');
             if (ln[0] == "#")
             {
-                if (ln[1] == "BPM") bpm = float.Parse(ln[2]);
-                if (ln[1] == "TYPE") type = ln[2];
-                if (ln[1] == "START") startTime = float.Parse(ln[2]);
+                switch (ln[1])
+                {
+                    case "BPM":
+                        bpm = float.Parse(ln[2]);
+                        break;
+                    case "START":
+                        startTime = float.Parse(ln[2]);
+                        break;
+                    case "MUSIC":
+                        score.MusicName = "";
+                        for (int i = 2; i < ln.Length; i++)
+                        {
+                            score.MusicName += ln[i];
+                            if (i < ln.Length - 1) score.MusicName += " ";
+                        }
+                        break;
+                    case "TIME_LENGTH":
+                        score.SetTimeLength(float.Parse(ln[2]));
+                        break;
+                }
                 continue;
             }
             if (ln.Length == 2) score.Add(new InGame.Note(float.Parse(ln[0])*60/bpm+startTime, dict[ln[1]], ln[1]));
