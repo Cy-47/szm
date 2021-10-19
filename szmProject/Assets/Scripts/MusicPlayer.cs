@@ -24,7 +24,7 @@ public class MusicPlayer : MonoBehaviour
     
     public void PlayHitEffect()
     {
-        _audioSource.PlayOneShot(hitSoundFx, 3f);
+        _audioSource.PlayOneShot(hitSoundFx, 1);
     }
 
     public void Pause()

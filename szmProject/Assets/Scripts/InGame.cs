@@ -15,7 +15,7 @@ public class InGame : MonoBehaviour
     private MusicPlayer _musicPlayer;
     public EvalText evalText;
     private string _eval;
-    public GameObject noteCanvas;
+    public NoteCanvas noteCanvas;
     public UnityEvent onHitNote;
     public int offset;
     public int flowRate;
@@ -96,7 +96,6 @@ public class InGame : MonoBehaviour
                     }
                 }
             }
-
         }
     }
 
@@ -108,10 +107,11 @@ public class InGame : MonoBehaviour
             var note = score.GetNote(_atNoteNum++);
             GameObject go;
             go = Instantiate(notePrefab, noteCanvas.transform, false);
-            go.transform.localPosition = new Vector3(_xAxisOf[note.keyCode]*noteCanvas.GetComponent<NoteCanvas>().GetZeroLineWidth()/2, 1000, 0);
+            go.transform.localPosition = new Vector3(_xAxisOf[note.keyCode]*GetUsableZeroLineWidth()/2, 1000, 0);
             go.GetComponent<NoteObject>().SetTime(note.time);
             go.name = note.keyCode.ToString();
             go.transform.Find("Canvas").Find("Text").GetComponent<Text>().text = note.name;
+            noteCanvas.AddNoteObject(go);
         }
     }
 
@@ -142,6 +142,15 @@ public class InGame : MonoBehaviour
         return _timer;
     }
 
+    public float GetUsableZeroLineWidth()
+    {
+        return noteCanvas.GetZeroLineWidth() - 80;
+    }
+
+    /// <summary>
+    /// Show the lines for 4k notes
+    /// Todo: This should be moved to NoteCanvas.cs
+    /// </summary>
     public void Show4KLines()
     {
         
@@ -150,18 +159,31 @@ public class InGame : MonoBehaviour
         localScale = new Vector3(1, 400, 1);
         rotation = Quaternion.Euler(0, 0, 0);
         
-        position = new Vector3(_xAxisOf[KeyCode.D] * noteCanvas.GetComponent<NoteCanvas>().GetZeroLineWidth() / 2, 0, 0);
-        noteCanvas.GetComponent<NoteCanvas>().GenLine(position, rotation, localScale);
+        position = new Vector3(_xAxisOf[KeyCode.D] * GetUsableZeroLineWidth() / 2, 0, 0);
+        noteCanvas.GenLine(position, rotation, localScale).name = "DLine";
+
+        position = new Vector3(_xAxisOf[KeyCode.F] * GetUsableZeroLineWidth() / 2, 0, 0);
+        noteCanvas.GenLine(position, rotation, localScale).name = "FLine";
         
-        position = new Vector3(_xAxisOf[KeyCode.F] * noteCanvas.GetComponent<NoteCanvas>().GetZeroLineWidth() / 2, 0, 0);
-        noteCanvas.GetComponent<NoteCanvas>().GenLine(position, rotation, localScale);
+        position = new Vector3(_xAxisOf[KeyCode.J] * GetUsableZeroLineWidth() / 2, 0, 0);
+        noteCanvas.GenLine(position, rotation, localScale).name = "JLine";
         
-        position = new Vector3(_xAxisOf[KeyCode.J] * noteCanvas.GetComponent<NoteCanvas>().GetZeroLineWidth() / 2, 0, 0);
-        noteCanvas.GetComponent<NoteCanvas>().GenLine(position, rotation, localScale);
-        
-        position = new Vector3(_xAxisOf[KeyCode.K] * noteCanvas.GetComponent<NoteCanvas>().GetZeroLineWidth() / 2, 0, 0);
-        noteCanvas.GetComponent<NoteCanvas>().GenLine(position, rotation, localScale);
+        position = new Vector3(_xAxisOf[KeyCode.K] * GetUsableZeroLineWidth() / 2, 0, 0);
+        noteCanvas.GenLine(position, rotation, localScale).name = "KLine";
     }
+
+    /// <summary>
+    /// Removes the lines for 4k notes
+    /// Todo: This should be moved to NoteCanvas.cs
+    /// </summary>
+    public void Remove4KLines()
+    {
+        Destroy(noteCanvas.transform.Find("Lines").Find("DLine"));
+        Destroy(noteCanvas.transform.Find("Lines").Find("FLine"));
+        Destroy(noteCanvas.transform.Find("Lines").Find("JLine"));
+        Destroy(noteCanvas.transform.Find("Lines").Find("KLine"));
+    }
+    
     public class Note
     {
         public float time;
@@ -211,27 +233,28 @@ public class InGame : MonoBehaviour
     /// </summary>
     public class Score
     {
-        private List<Note> notes = new List<Note>();
+        private List<Note> _notes = new List<Note>();
         private float _timeLength;
         private bool _hasSetTimeLength = false;
         public string MusicName;
+        private List<String> _instructions = new List<string>();
 
         public void Add(Note note)
         {
             //可优化为二分查找
             int i=0;
-            while (i < notes.Count && notes[i++].time < note.time) ; 
-            notes.Insert(i, note);
+            while (i < _notes.Count && _notes[i++].time < note.time) ; 
+            _notes.Insert(i, note);
         }
 
         public List<Note> GetNotes()
         {
-            return notes;
+            return _notes;
         }
 
         public int NoteCount()
         {
-            return notes.Count;
+            return _notes.Count;
         }
 
         public void SetTimeLength(float timeLength)
@@ -252,7 +275,17 @@ public class InGame : MonoBehaviour
 
         public Note GetNote(int i)
         {
-            return notes[i];
+            return _notes[i];
+        }
+
+        public List<String> GetInstructions()
+        {
+            return _instructions;
+        }
+
+        public void AddInstruction(String instruction)
+        {
+            _instructions.Add(instruction);
         }
     }
 }

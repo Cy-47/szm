@@ -13,7 +13,8 @@ public class MainGame : MonoBehaviour
     public Button pauseButton, returnButton, resumeButton, retryButton;
     private bool _paused;
     public GameObject pauseMenu;
-    
+    private const float InitTimerTime = -2; //Delay the game start
+
     // Start is called before the first frame update
 
     private void Awake()
@@ -37,8 +38,8 @@ public class MainGame : MonoBehaviour
         resumeButton.onClick.AddListener(PauseOrResume);
         retryButton.onClick.AddListener(Retry);
         _inGame.StartNewGame();
-        //_inGame.Show4KLines();
-        _inGame.GetTimer().setTime(-1);
+        _inGame.Show4KLines();
+        _inGame.GetTimer().setTime(InitTimerTime);
         _paused = false;
     }
 
@@ -77,14 +78,11 @@ public class MainGame : MonoBehaviour
 
     void Retry()
     {
-        foreach (Transform child in GameObject.Find("NoteCanvas").transform)
-        {
-            if(child.name != "ZeroLine") Destroy(child.gameObject);
-        }
+        _inGame.noteCanvas.ClearNoteObjects();
         _scoreMeter.Clear();
         _scoreMeter.SetCount("Total", _score.NoteCount());
         _inGame.StartNewGame();
-        _inGame.GetTimer().setTime(-1);
+        _inGame.GetTimer().setTime(InitTimerTime);
         _paused = false;
         pauseMenu.SetActive(false);
     }

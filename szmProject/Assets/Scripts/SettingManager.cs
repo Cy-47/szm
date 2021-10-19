@@ -37,10 +37,7 @@ public class SettingManager : MonoBehaviour
     {
         if (GetComponent<Timer>().GetTime() > 2)
         {
-            foreach (Transform child in GameObject.Find("NoteCanvas").transform)
-            {
-                if(child.name != "ZeroLine") Destroy(child.gameObject);
-            }
+            _inGame.noteCanvas.GetComponent<NoteCanvas>().ClearNoteObjects();
             _inGame.StartNewGame();
         }
         if(Input.GetKeyDown(KeyCode.A)) DecreaseOffset();

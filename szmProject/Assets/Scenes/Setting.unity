@@ -217,7 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   notePrefab: {fileID: 5280678337769322032, guid: 5936ede5710b54302887b22edab5cb36, type: 3}
   evalText: {fileID: 634094263}
-  noteCanvas: {fileID: 547496530}
+  noteCanvas: {fileID: 1361103796}
   onHitNote:
     m_PersistentCalls:
       m_Calls: []
@@ -891,11 +891,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &547496530 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6553383461988889051, guid: ee7d17cdf43c54fcb9a35266b06a988e, type: 3}
-  m_PrefabInstance: {fileID: 1361103795}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &588996552
 GameObject:
   m_ObjectHideFlags: 0
@@ -1910,6 +1905,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee7d17cdf43c54fcb9a35266b06a988e, type: 3}
+--- !u!114 &1361103796 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5144373194468409212, guid: ee7d17cdf43c54fcb9a35266b06a988e, type: 3}
+  m_PrefabInstance: {fileID: 1361103795}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0f63133567ed4645b8e60ef57307758, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1389132861
 GameObject:
   m_ObjectHideFlags: 0
